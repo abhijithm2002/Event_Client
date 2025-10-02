@@ -37,7 +37,7 @@ const EventDetails = () => {
     (location.state as { event?: IEvent })?.event || null
   );
   const [loading, setLoading] = useState(!event);
-  const [ticketQty, setTicketQty] = useState(1); 
+  const [ticketQty, setTicketQty] = useState(1);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -58,44 +58,55 @@ const EventDetails = () => {
   }, [event, eventId]);
 
   const handleBookTicket = async () => {
-  if (!event) return;
-  try {
-    setBooking(true);
-    const userId = user._id;
+    if (!user) {
+    navigate("/login", { state: { from: location } });
+    return;
+  }
+    if (!event) return;
+    try {
+      setBooking(true);
+      const userId = user._id;
 
-    const ticket = await bookTicket(event._id, userId, ticketQty);
+      const ticket = await bookTicket(event._id, userId, ticketQty);
 
-    Swal.fire({
-      icon: "success",
-      title: "Booking Confirmed 🎉",
-      text: `You have successfully booked ${ticketQty} ticket(s) for "${event.title}".`,
-      confirmButtonColor: "#d33",
-      confirmButtonText: "Awesome!"
-    });
+      Swal.fire({
+        icon: "success",
+        title: "Booking Confirmed 🎉",
+        html: `
+        <p><b>Event:</b> ${event.title}</p>
+        <p><b>Tickets:</b> ${ticketQty}</p>
+      `,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Go to My Tickets"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/tickets", { state: { ticket } });
+        }
+      });
 
-    console.log("Booked ticket:", ticket);
+      console.log("Booked ticket:", ticket);
 
-     setEvent((prev) =>
-      prev
-        ? {
+      setEvent((prev) =>
+        prev
+          ? {
             ...prev,
             sold: prev.sold + ticketQty,
           }
-        : prev
-    );
+          : prev
+      );
 
-    setTicketQty(1);
-  } catch (error: any) {
-    Swal.fire({
-      icon: "error",
-      title: "Booking Failed",
-      text: error.response?.data?.error || "Failed to book ticket",
-      confirmButtonColor: "#d33",
-    });
-  } finally {
-    setBooking(false);
-  }
-};
+      setTicketQty(1);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Booking Failed",
+        text: error.response?.data?.error || "Failed to book ticket",
+        confirmButtonColor: "#d33",
+      });
+    } finally {
+      setBooking(false);
+    }
+  };
 
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -111,6 +122,11 @@ const EventDetails = () => {
   };
 
   const remainingTickets = event ? event.quantity - event.sold : 0;
+
+  const isEventStarted = event
+    ? new Date() >= new Date(event.startAt)
+    : false;
+
 
   if (loading) {
     return (
@@ -203,14 +219,17 @@ const EventDetails = () => {
               color="danger"
               variant="shadow"
               onPress={handleBookTicket}
-              disabled={booking || remainingTickets <= 0}
+              disabled={booking || remainingTickets <= 0 || isEventStarted}
             >
               {booking
                 ? "Booking..."
-                : remainingTickets > 0
-                ? "Book Ticket"
-                : "Sold Out"}
+                : isEventStarted
+                  ? "Event Started"
+                  : remainingTickets > 0
+                    ? "Book Ticket"
+                    : "Sold Out"}
             </Button>
+
           </div>
         </div>
       </div>

@@ -92,8 +92,16 @@ export default function Events() {
             description: Yup.string().required("Description is required"),
             venue: Yup.string().required("Venue is required"),
             address: Yup.string().required("Address is required"),
-            startAt: Yup.date().required("Start date/time is required"),
-            endAt: Yup.date().required("End date/time is required"),
+            startAt: Yup.date()
+                .required("Start date/time is required")
+                .min(new Date(), "Start date/time cannot be in the past"),
+            endAt: Yup.date()
+                .required("End date/time is required")
+                .when("startAt", (startAt: any, schema: Yup.DateSchema) => {
+                    if (!startAt) return schema;
+                    const startDate = new Date(startAt);
+                    return schema.min(startDate, "End date/time must be after start date/time");
+                }),
             capacity: Yup.number().typeError("Capacity must be a number").required("Capacity is required"),
             price: Yup.number().typeError("Price must be a number"),
             currency: Yup.string().required("Currency is required"),

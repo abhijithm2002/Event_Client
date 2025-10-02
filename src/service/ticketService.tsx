@@ -10,11 +10,13 @@ export const bookTicket = async (eventId: string, userId: string, quantity: numb
 };
 
 export const getMyTickets = async (userId: string) => {
-  const { data } = await authInstance.get(`api/ticket/${userId}`);
+  const { data } = await authInstance.get(`api/ticket/getMyTicket/${userId}`);
+  console.log('response in fetching tickets', data);
   return data;
 };
 
+
 export const cancelTicket = async (ticketId: string) => {
-  const { data } = await authInstance.put(`/api/${ticketId}/cancel`);
+  const { data } = await authInstance.delete(`api/ticket/cancelTicket/${ticketId}`);
   return data;
 };

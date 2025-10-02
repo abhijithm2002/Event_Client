@@ -1,40 +1,47 @@
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Home from '../pages/Home';
-import { RootLayout } from '../layout/root.layout'
+import { RootLayout } from '../layout/root.layout';
 import { createBrowserRouter } from "react-router";
 import Events from '../pages/Events';
 import AllEvents from '../pages/AllEvents';
 import EventDetails from '../pages/EventDetails';
+import MyTickets from '../pages/MyTickets';
+import { ProtectedRoute } from './ProtectedRoute';
+
 export const AppRouter = createBrowserRouter([
     {
         path: "/",
         element: <RootLayout />,
         children: [
-            {
-                index: true,
-                element: <Home />,
+            { index: true, element: <Home /> },
+            { 
+                path: "login", 
+                element: (
+                    <ProtectedRoute redirectIfAuth redirectPath="/">
+                        <Login />
+                    </ProtectedRoute>
+                ),
             },
-            {
-                path: "login",
-                element: <Login />,
+            { 
+                path: "register", 
+                element: (
+                    <ProtectedRoute redirectIfAuth redirectPath="/">
+                        <Register />
+                    </ProtectedRoute>
+                ),
             },
-            {
-                path: "register",
-                element: <Register />,
+            { 
+                path: "addEvent", 
+                element: (
+                    <ProtectedRoute authRequired redirectPath="/login">
+                        <Events />
+                    </ProtectedRoute>
+                ),
             },
-            {
-                path: "addEvent",
-                element: <Events />,
-            },
-            {
-                path: "events",
-                element: <AllEvents />,
-            },
-            {
-                path: "events/:id",
-                element: <EventDetails />,
-            },
+            { path: "events", element: <AllEvents /> },
+            { path: "events/:id", element: <EventDetails /> },
+            { path: "tickets", element: <MyTickets /> },
         ],
     },
 ]);

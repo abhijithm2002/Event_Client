@@ -1,5 +1,5 @@
-
 import { HeroCarousel } from '../components/home/hero-corousel/hero-corousel';
+import { ShowEvents } from '../components/home/ShowEvents';
 // import { Collections } from '../components/home/collections';
 // import { GetInTouch } from '../components/home/getInTouch';
 // import { Welcome } from '../components/home/welcome';
@@ -14,14 +14,7 @@ const Home = () => {
             {/* <Welcome /> */}
 
                 {/* Full-width image section */}
-                <section className="w-full my-6">
-                    <img
-                        src="/machine.jpg"
-                        alt="Machine"
-                        className="w-full h-auto object-cover object-center"
-                        style={{ maxHeight: '500px' }}
-                    />
-                </section>
+                <ShowEvents />
 
             {/* <Collections />
             
