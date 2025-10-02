@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../ReduxStore/store";
 
 interface IProtectedRoute {
-    children: JSX.Element;
+    children: any;
     authRequired?: boolean; // true = only logged-in users can access
     redirectIfAuth?: boolean; // true = redirect logged-in users away (like login/register)
     redirectPath?: string;

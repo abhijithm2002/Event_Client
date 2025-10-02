@@ -1,11 +1,4 @@
-import {
-    Facebook,
-    Twitter,
-    Instagram,
-    Linkedin,
-    Youtube,
-    Phone,
-} from "lucide-react";
+
 import { Link } from "react-router";
 
 export const Footer = () => {

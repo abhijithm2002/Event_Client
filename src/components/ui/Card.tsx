@@ -16,7 +16,7 @@ interface EventCardProps {
   className?: string;
 }
 
-export const EventCard = ({ event, onClick, className = '' }: EventCardProps) => {
+export const EventCard = ({ event, className = '' }: EventCardProps) => {
 const navigate = useNavigate();
 
   return (

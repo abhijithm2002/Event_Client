@@ -12,7 +12,6 @@ import {
 import { createEvent, getMyEvents } from "../service/userService";
 import { useSelector } from "react-redux";
 import { useFormik } from "formik";
-import type { FormikHelpers } from "formik";
 import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import uploadImageToCloudinary from "../utils/UploadCloudinary";

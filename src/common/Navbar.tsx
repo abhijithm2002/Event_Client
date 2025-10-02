@@ -9,7 +9,6 @@ import { Button } from '@heroui/react';
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [navTheme, setNavTheme] = useState<"transparent" | "white">("transparent");
-    const [isSearchFocused, setIsSearchFocused] = useState(false);
 
     const user = useSelector((state: RootState) => state.auth.user);
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -53,7 +52,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Center: Logo */}
-                    <div className={`flex justify-start md:justify-center ${isSearchFocused ? 'w-fit' : 'flex-1'} md:w-1/3 ps-2 md:ps-0`}>
+                    <div className={`flex justify-start md:justify-center flex-1 md:w-1/3 ps-2 md:ps-0`}>
                         <Link to="/" className="text-2xl font-extrabold">
                             <p className="font-extrabold text-3xl tracking-tight font-sans -translate-x-3">Events</p>
                             <p className="ml-2 text-base font-semibold font-sans translate-x-3">Management</p>
