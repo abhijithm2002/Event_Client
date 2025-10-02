@@ -253,17 +253,6 @@ export default function Events() {
                                     )}
 
                                     <Input
-                                        label="Currency"
-                                        name="currency"
-                                        value={formik.values.currency}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    {formik.touched.currency && formik.errors.currency && (
-                                        <span className="text-red-500 text-sm">{formik.errors.currency}</span>
-                                    )}
-
-                                    <Input
                                         label="Quantity"
                                         type="number"
                                         name="quantity"
